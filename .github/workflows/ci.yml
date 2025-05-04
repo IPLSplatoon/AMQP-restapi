@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/ci.yml'
+      - 'restapi/**'
+      - 'pyproject.toml'
+      - 'pdm.lock'
+
   workflow_dispatch:
 
 env:

@@ -1,4 +1,4 @@
-# ampq-restapi
+# AMQP-restapi
 A simple restapi for sending messages to an ampq based message broker
 
 This app is a simple REST API that allows you to send messages to an AMQP-based message broker.  based on aiopika and
@@ -18,7 +18,7 @@ This was designed to be used with RabbitMQ, but likely will work with any AMQP-b
 ### Docker
 You cause pull the container from Github container registry
 ```bash
-docker pull ghcr.io/iplsplatoon/ampq-restapi:master
+docker pull ghcr.io/iplsplatoon/AMQP-restapi:master
 ```
 
 or use `ghcr.io/iplsplatoon/ampq-restapi:master` as the image name in your docker-compose file.
