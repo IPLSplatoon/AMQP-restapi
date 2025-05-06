@@ -7,7 +7,6 @@ from restapi.rpc import Client
 from restapi.routes import rpc_router
 
 rpc_uri = os.getenv("RPC_URI")
-port = int(os.getenv("PORT", 2000))
 if not rpc_uri:
     raise ValueError("RPC_URI environment variable is not set.")
 
@@ -37,4 +36,4 @@ def create_app():
 
 app = create_app()
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=port)
+    uvicorn.run(app, host="localhost", port=2000)

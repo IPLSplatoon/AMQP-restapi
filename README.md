@@ -12,30 +12,55 @@ This was designed to be used with RabbitMQ, but likely will work with any AMQP-b
 - pip
 
 ### Environment Variables
-- `RPC_URI`: The URI of the message broker. E.G `amqp://guest:guest@localhost/`
-- `PORT`: The port to run the application on. (Default: 2000)
+- `RPC_URI`: The URI of the message broker. E.G `amqp://guest:guest@localhost:5672/`
 
 ### Docker
-You cause pull the container from Github container registry
+You can run the container by pulling from Github container registry
 ```bash
-docker pull ghcr.io/iplsplatoon/AMQP-restapi:master
+docker run ghcr.io/iplsplatoon/AMQP-restapi:master -p 2000:2000 -e RPC_URI=amqp://guest:guest@localhost:5672/
 ```
 
 or use `ghcr.io/iplsplatoon/ampq-restapi:master` as the image name in your docker-compose file.
 
+Example `docker-compose` file:
+```yaml
+services:
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        restart: unless-stopped
+        container_name: 'rabbitmq'
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - ./volumes/rabbitmq/data/:/var/lib/rabbitmq/
+            - ./volumes/rabbitmq/log/:/var/log/rabbitmq
+    rest-amqp:
+      image: b9d1a35b
+      ports:
+        - "2000:2000"
+      environment:
+        RPC_URI: amqp://guest:guest@rabbitmq:5672
+```
+
 ### Install: Bare Metal
+You can run the application using the Fastapi CLI
+
 1. Install python dependencies with pip
     ```bash
     pip install -r requirements.txt
     ```
 
-3. Run the application
+2. Run the application
     ```bash
-    python -m restapi
+    fastapi dev restapi/main.py 
     ```
    
+#### Ports
+The application will run on port `2000` by default. In docker you can change this by changing the `-p` flag in the 
+docker run command or in your docker-compose file. For bare metal, you can change the port by using the `--port`
+   
 ### Making requests
-The application will run on port 2000 by default.
 
 #### Docs
 The application is documented using OpenAPI. 
